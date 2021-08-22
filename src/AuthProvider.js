@@ -10,9 +10,23 @@ let AuthProvider = (props)=>{
 
     
     useEffect(()=>{
-      let unsub =  auth.onAuthStateChanged((user)=>{
+      let unsub =  auth.onAuthStateChanged(async(user)=>{
             if(user){
                 let{displayName,email,uid,photoURL}= user;
+
+                let docRef = firestore.collection("users").doc(uid)
+
+                let documentSnapshot = await docRef.get()
+
+                if(!documentSnapshot.exists){
+                    docRef.set( {
+                        displayName,
+                        email,
+                        photoURL
+                    })
+                }
+
+
 
                 setUser({displayName,email,uid,photoURL});
             }
