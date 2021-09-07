@@ -11,7 +11,7 @@ let user = useContext(authContext)
 let[posts,setPosts] = useState([]);
 
 useEffect(()=>{
-firestore.collection("posts").onSnapshot((querySnapshot)=>{
+let unsub = firestore.collection("posts").onSnapshot((querySnapshot)=>{
 
   let docArr = querySnapshot.docs;
 
@@ -27,6 +27,10 @@ firestore.collection("posts").onSnapshot((querySnapshot)=>{
 
   setPosts(arr);
 
+})
+
+return(()=>{
+    unsub();
 })
 
 },[]);
