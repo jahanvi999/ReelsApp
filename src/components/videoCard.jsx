@@ -13,8 +13,14 @@ let VideoCard = (props) =>{
      
 
      let user = useContext(authContext);
-     let currUserLiked =  props.data.likes.includes(user.uid)
 
+     let currUserLiked
+
+     if(user){
+        currUserLiked =  props.data.likes.includes(user.uid);
+
+     }
+     
 
      useEffect(()=>{
 
